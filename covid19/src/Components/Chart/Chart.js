@@ -6,22 +6,24 @@ import {
     useParams
   } from "react-router-dom";
 
-const CovidChart = (props) => {
+const CovidChart = () => {
     const  [data, setdata] = useState([]);
 
     let { id } = useParams();
-    
+
+
     useEffect(() => {
         let newRows = [];
-        Api.ReportsByCountries(id).then((response) => {
+        Api.CountriesByCode(id).then((response) => {
             newRows.push(['Number of people', 'Country'])
-            newRows.push(['Deaths', response.report.deaths])
-            newRows.push(['Cases', response.report.cases])
+            newRows.push(['Diabetes prevalence', response.diabetes_prevalence])
+            newRows.push(['Median age', response.median_age])
             setdata(newRows)
-        })        
+        })
       }, []);
   
     return (
+
         (data.length > 0) ? (<div>
             <div style={{ display: 'flex', maxWidth: 900 }}>
                 <Chart

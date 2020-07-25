@@ -1,4 +1,4 @@
-const API_HOST = 'https://covid19api.io/api/v1';
+const API_HOST = 'http://localhost:5000';
 
 const sendRequest = (resourceName, userOptions = {}, id) => {
     const defaultOptions = {
@@ -38,12 +38,12 @@ const sendRequest = (resourceName, userOptions = {}, id) => {
     });
 }
 
-const CountriesWhereCoronavirusHasSpread = () => {
-    return sendRequest('CountriesWhereCoronavirusHasSpread', {method: 'GET'})
+const Countries = () => {
+    return sendRequest('countries', {method:'GET'})
 }
 
-const ReportsByCountries = (country) => {
-    return sendRequest('ReportsByCountries/' + country, {method: 'GET'})
+const CountriesByCode = (code) => {
+    return sendRequest('country/' + code, {method:'GET'})
 }
 
-export default { CountriesWhereCoronavirusHasSpread, ReportsByCountries } ;
+export default { CountriesWhereCoronavirusHasSpread, ReportsByCountries, Countries, CountriesByCode } ;

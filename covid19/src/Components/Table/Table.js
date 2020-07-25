@@ -94,14 +94,15 @@ export default function CovidTable() {
     const  [rows, setRows] = useState([]);
 
     useEffect(() => {
-        Api.CountriesWhereCoronavirusHasSpread().then((response) => {
+        Api.Countries().then((response) => {
             let newRows = [];
-            response.table.map(data => {
+            console.log(response);
+            response.map(data => {
                 console.log(data)
                 newRows.push({
-                    'country': data['Country'],
-                    'cases': data['Cases'],
-                    'deaths': data['Deaths']
+                    'location': data['location'],
+                    'continent': data['continent'],
+                    'country_code': data['country_code']
                 })
             })
             setRows(newRows)
@@ -128,9 +129,9 @@ export default function CovidTable() {
             <Table className={classes.table} aria-label="custom pagination table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Country</TableCell>
-                        <TableCell align="right">Cases</TableCell>
-                        <TableCell align="right">Death</TableCell>
+                        <TableCell>Location</TableCell>
+                        <TableCell align="right">Continent</TableCell>
+                        <TableCell align="right">Country Code</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -138,17 +139,17 @@ export default function CovidTable() {
                             ? rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                             : rows
                     ).map((row) => (
-                        <TableRow key={row.country}>
+                        <TableRow key={row.location}>
                             <TableCell component="th" scope="row">
-                                <Link to={'/Chart/' + row.country.toLowerCase()} > 
-                                        {row.country}
+                                <Link to={'/Chart/' + row.country_code} >
+                                        {row.location}
                                 </Link>
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {row.cases}
+                                {row.continent}
                             </TableCell>
                             <TableCell style={{ width: 160 }} align="right">
-                                {row.deaths}
+                                {row.country_code}
                             </TableCell>
                         </TableRow>
                     ))}
